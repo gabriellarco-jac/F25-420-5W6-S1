@@ -18,6 +18,12 @@ namespace Dutch_Treat.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            ViewBag.Header = "Contact Us Today";
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
