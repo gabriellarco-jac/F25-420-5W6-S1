@@ -18,11 +18,23 @@ namespace Dutch_Treat.Controllers
             return View();
         }
 
+        [HttpGet("Contact")]
         public IActionResult Contact()
         {
             ViewBag.Header = "Contact Us Today";
             return View();
         }
+
+        [HttpPost("Contact")]
+        public IActionResult Contact(ContactModel contact)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("Success", contact);
+            }
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {

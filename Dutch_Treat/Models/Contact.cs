@@ -2,7 +2,7 @@
 
 namespace Dutch_Treat.Models
 {
-    public class Contact
+    public class ContactModel
     {
         [Required]
         [MinLength(2, ErrorMessage = "First Name must have at least 2 characters long.")]
