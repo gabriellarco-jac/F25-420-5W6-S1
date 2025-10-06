@@ -1,3 +1,4 @@
+using Dutch_Treat.Data;
 using Dutch_Treat.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,10 +8,12 @@ namespace Dutch_Treat.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _db = context;
         }
 
         public IActionResult Index()
@@ -35,9 +38,18 @@ namespace Dutch_Treat.Controllers
             return View();
         }
 
+        public IActionResult Shop()
+        {
+            var results = _db.Products
+                .OrderBy(p => p.Category)
+                .ToList();
+
+            return View(results);
+        }
 
         public IActionResult Privacy()
         {
+            
             return View();
         }
 
