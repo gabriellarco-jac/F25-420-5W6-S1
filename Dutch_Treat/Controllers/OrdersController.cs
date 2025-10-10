@@ -15,12 +15,13 @@ namespace Dutch_Treat.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDutchOrderRepository _repository;
-
-        public OrdersController(ILogger<HomeController> logger, IDutchOrderRepository repository)
+        private readonly IUnitOfWork _unitOfWork;
+        public OrdersController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _repository = repository;
-        }
+            _unitOfWork = unitOfWork;
+            _repository = _unitOfWork.OrderRepository;
+        }      
 
         // GET: Orders
         public IActionResult Index()
