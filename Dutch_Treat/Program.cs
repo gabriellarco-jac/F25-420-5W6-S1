@@ -20,6 +20,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<DutchSeeder>();
 builder.Services.AddScoped<IDutchProductRepository, DutchProductRepository>();
+builder.Services.AddScoped<IDutchOrderRepository, DutchOrderRepository>();
 
 
 
