@@ -1,4 +1,6 @@
 using Dutch_Treat.Data;
+using Dutch_Treat.Data.Interfaces;
+using Dutch_Treat.Data.Repositories;
 using DutchTreat.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<DutchSeeder>();
-builder.Services.AddScoped<IDutchRepository, DutchRepository>();
+builder.Services.AddScoped<IDutchProductRepository, DutchProductRepository>();
+
+
 
 var app = builder.Build();
 

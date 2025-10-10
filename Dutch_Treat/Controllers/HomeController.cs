@@ -9,14 +9,14 @@ namespace Dutch_Treat.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IDutchRepository _repository;
+        //private readonly IDutchRepository _repository;
 
         //private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger, IDutchRepository repository)
+        public HomeController(ILogger<HomeController> logger)//, IDutchRepository repository)
         {
             _logger = logger;
-            _repository = repository;
+            //_repository = repository;
         }
 
         public IActionResult Index()
@@ -40,16 +40,7 @@ namespace Dutch_Treat.Controllers
             }
             return View();
         }
-
-        public IActionResult Shop()
-        {
-            var results = _repository.GetAllProducts()
-                .OrderBy(p => p.Category)
-                .ToList();
-
-            return View(results);
-        }
-
+               
         public IActionResult Privacy()
         {
             

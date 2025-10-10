@@ -4,7 +4,7 @@ using DutchTreat.Data.Entities;
 
 namespace DutchTreat.Data
 {
-    public class DutchRepository : IDutchRepository
+    public class DutchRepository
     {
         private readonly ApplicationDbContext _db;
         private readonly ILogger<DutchRepository> _logger;
@@ -31,12 +31,7 @@ namespace DutchTreat.Data
                 return null;
             }
         }
-        public IEnumerable<Product> GetProductsByCategory(string category)
-        {
-            return _db.Products
-                    .Where(p => p.Category == category)
-                    .ToList();
-        }
+       
 
         public bool SaveAll()
         {
