@@ -8,26 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using DutchTreat.Data.Entities;
 using Dutch_Treat.Data;
 using Dutch_Treat.Data.Interfaces;
+using Dutch_Treat.Controllers.Base;
 
 namespace Dutch_Treat.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersController : BaseController<Order>
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<OrdersController> _logger;
         private readonly IDutchOrderRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
-        public OrdersController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public OrdersController(ILogger<OrdersController> logger, IUnitOfWork unitOfWork)
+            : base(logger, unitOfWork.OrderRepository)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.OrderRepository;
         }      
 
-        // GET: Orders
-        public IActionResult Index()
-        {
-            return View(_repository.GetAll());
-        }
+        //// GET: Orders
+        //public IActionResult Index()
+        //{
+        //    return View(_repository.GetAll());
+        //}
 
         //// GET: Orders/Details/5
         //public async Task<IActionResult> Details(int? id)

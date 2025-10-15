@@ -21,13 +21,13 @@ namespace Dutch_Treat.Controllers
             _repository = _unitOfWork.ProductRepository;
         }
 
-        //public IActionResult Index()
-        //{
-        //    var results = _repository.GetAll()
-        //        .OrderBy(p => p.Category)
-        //        .ToList();
+        public override IActionResult Index()
+        {
+            var results = _repository.GetAll()
+                .OrderBy(p => p.Category)
+                .ToList();
 
-        //    return View(results);
-        //}
+            return View(results);
+        }
     }
 }
