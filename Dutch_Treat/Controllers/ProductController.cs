@@ -12,7 +12,8 @@ namespace Dutch_Treat.Controllers
         private readonly IDutchProductRepository _repository;
         private IUnitOfWork _unitOfWork;
 
-        public ProductController(ILogger<ProductController> logger, IUnitOfWork unitOfWork) 
+        public ProductController(ILogger<ProductController> logger, 
+            IUnitOfWork unitOfWork) 
             : base(logger, unitOfWork.ProductRepository)
         {
             _logger = logger;
