@@ -36,6 +36,12 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
+        <tr>
+                @foreach(var it in item.Items)
+                {
+                    <td>@Html.DisplayFor(itemIt => it.Product)</td>
+                }
+            </tr>
 }
     </tbody>
 </table>

@@ -18,6 +18,5 @@ namespace Dutch_Treat.Controllers
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.OrderRepository;
         }
-
     }
 }
