@@ -8,10 +8,11 @@ namespace Dutch_Treat.Data.Repositories.Helpers
 
         public Dictionary<Type, object> Repositories { get; private set; }
 
-        public RepositoryProvider(ILoggerFactory loggerFactory)
+        public RepositoryProvider(ApplicationDbContext dbContext, ILoggerFactory loggerFactory)
         {
             _repositoryFactories = new RepositoryFactories(loggerFactory);
-            Repositories = new Dictionary<Type, object>();
+            Repositories = new Dictionary<Type, object>();       
+            DbContext = dbContext;
         }
 
         public ApplicationDbContext DbContext { get; set; }
@@ -25,7 +26,7 @@ namespace Dutch_Treat.Data.Repositories.Helpers
         {
             object repoObj;
             Repositories.TryGetValue(typeof(T), out repoObj);
-            if (repoObj == null)
+            if (repoObj != null)
             {
                 return (T)repoObj;
             }

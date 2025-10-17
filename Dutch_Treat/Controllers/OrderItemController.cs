@@ -9,14 +9,14 @@ namespace Dutch_Treat.Controllers
     public class OrderItemController : BaseController<OrderItem>
     {
         private readonly ILogger<OrderItemController> _logger;
-        private readonly IDutchOrderRepository _repository;
+        private readonly IDutchOrderItemRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         public OrderItemController(ILogger<OrderItemController> logger, IUnitOfWork unitOfWork)
-            : base(logger, unitOfWork.OrderItemRepository)
+            : base(logger, unitOfWork.GetRepository<IDutchRepository<OrderItem>>())
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.OrderRepository;
+            _repository = (IDutchOrderItemRepository)_unitOfWork.GetRepository<IDutchRepository<OrderItem>>();
         }
     }
 }

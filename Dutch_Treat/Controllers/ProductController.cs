@@ -14,11 +14,11 @@ namespace Dutch_Treat.Controllers
 
         public ProductController(ILogger<ProductController> logger, 
             IUnitOfWork unitOfWork) 
-            : base(logger, unitOfWork.ProductRepository)
+            : base(logger, unitOfWork.GetRepository<IDutchRepository<Product>>())
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.ProductRepository;
+            _repository = (IDutchProductRepository)_unitOfWork.GetRepository<IDutchRepository<Product>>();
         }
 
         public override IActionResult Index()

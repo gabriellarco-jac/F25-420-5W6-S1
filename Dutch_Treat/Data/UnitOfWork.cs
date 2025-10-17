@@ -1,4 +1,6 @@
-﻿using Dutch_Treat.Data.Repositories;
+﻿using Dutch_Treat.Data.Interfaces;
+using Dutch_Treat.Data.Repositories;
+using Dutch_Treat.Data.Repositories.Helpers;
 using DutchTreat.Data.Entities;
 
 namespace Dutch_Treat.Data
@@ -6,54 +8,61 @@ namespace Dutch_Treat.Data
     public class UnitOfWork: IUnitOfWork
     {
         private ApplicationDbContext _context;
-        private ILogger<DutchProductRepository> _loggerProduct;
-        private DutchProductRepository _productRepository;
+        private readonly IRepositoryProvider _repositoryProvider;
+        //private ILogger<DutchProductRepository> _loggerProduct;
+        //private DutchProductRepository _productRepository;
 
-        public UnitOfWork(ApplicationDbContext context, ILoggerFactory loggerFactory) 
+        public UnitOfWork(ApplicationDbContext context, IRepositoryProvider provider, ILoggerFactory loggerFactory) 
         {
-            _loggerOrder = new Logger<DutchOrderRepository>(loggerFactory);
-            _loggerProduct = new Logger<DutchProductRepository>(loggerFactory);
+            //_loggerOrder = new Logger<DutchOrderRepository>(loggerFactory);
+            //_loggerProduct = new Logger<DutchProductRepository>(loggerFactory);
             _context = context;
-        }
-        public DutchProductRepository ProductRepository
-        {
-            get
-            {
-                if (this._productRepository == null)
-                {
-                    this._productRepository = new DutchProductRepository(_context, _loggerProduct);
-                }
-                return this._productRepository;
-            }
+            _repositoryProvider = provider;
         }
 
-        private ILogger<DutchOrderRepository> _loggerOrder;
-        private DutchOrderRepository _orderRepository;       
-        public DutchOrderRepository OrderRepository
+        public T GetRepository<T>() where T : class
         {
-            get
-            {
-                if (this._orderRepository == null)
-                {
-                    this._orderRepository = new DutchOrderRepository(_context, _loggerOrder);
-                }
-                return this._orderRepository;
-            }
+            return _repositoryProvider.GetRepository<T>();
         }
+        //public DutchProductRepository ProductRepository
+        //{
+        //    get
+        //    {
+        //        if (this._productRepository == null)
+        //        {
+        //            this._productRepository = new DutchProductRepository(_context, _loggerProduct);
+        //        }
+        //        return this._productRepository;
+        //    }
+        //}
 
-        private ILogger<DutchOrderItemRepository> _loggerOrderItem;
-        private DutchOrderItemRepository _orderItemRepository;
-        public DutchOrderItemRepository OrderItemRepository
-        {
-            get
-            {
-                if (this._orderItemRepository == null)
-                {
-                    this._orderItemRepository = new DutchOrderItemRepository(_context, _loggerOrderItem);
-                }
-                return this._orderItemRepository;
-            }
-        }
+        //private ILogger<DutchOrderRepository> _loggerOrder;
+        //private DutchOrderRepository _orderRepository;       
+        //public DutchOrderRepository OrderRepository
+        //{
+        //    get
+        //    {
+        //        if (this._orderRepository == null)
+        //        {
+        //            this._orderRepository = new DutchOrderRepository(_context, _loggerOrder);
+        //        }
+        //        return this._orderRepository;
+        //    }
+        //}
+
+        //private ILogger<DutchOrderItemRepository> _loggerOrderItem;
+        //private DutchOrderItemRepository _orderItemRepository;
+        //public DutchOrderItemRepository OrderItemRepository
+        //{
+        //    get
+        //    {
+        //        if (this._orderItemRepository == null)
+        //        {
+        //            this._orderItemRepository = new DutchOrderItemRepository(_context, _loggerOrderItem);
+        //        }
+        //        return this._orderItemRepository;
+        //    }
+        //}
 
         private bool disposedValue;
         protected virtual void Dispose(bool disposing)
@@ -74,5 +83,7 @@ namespace Dutch_Treat.Data
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        
     }
 }

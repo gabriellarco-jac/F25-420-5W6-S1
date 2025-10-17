@@ -18,11 +18,11 @@ namespace Dutch_Treat.Controllers
         private readonly IDutchOrderRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         public OrdersController(ILogger<OrdersController> logger, IUnitOfWork unitOfWork)
-            : base(logger, unitOfWork.OrderRepository)
+            : base(logger, unitOfWork.GetRepository<IDutchRepository<Order>>())
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.OrderRepository;
+            _repository = (IDutchOrderRepository)_unitOfWork.GetRepository<IDutchRepository<Order>>();
         }      
 
         //// GET: Orders
