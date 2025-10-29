@@ -15,14 +15,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser<int>>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<DutchSeeder>();
 
-//builder.Services.AddScoped<IDutchProductRepository, DutchProductRepository>();
-//builder.Services.AddScoped<IDutchOrderRepository, DutchOrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
 
