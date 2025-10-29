@@ -15,8 +15,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser<int>>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<DutchSeeder>();
@@ -27,16 +30,16 @@ builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
 
 var app = builder.Build();
 
-RunSeeding(app);
+await RunSeeding(app);
 
-void RunSeeding(WebApplication app)
+async Task RunSeeding(WebApplication app)
 {
     var scopeFactory = app.Services.GetService<IServiceScopeFactory>();
 
     using (var scope = scopeFactory.CreateScope())
     {
         var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-        seeder.Seed();
+        await seeder.Seed();
     }
 }
 

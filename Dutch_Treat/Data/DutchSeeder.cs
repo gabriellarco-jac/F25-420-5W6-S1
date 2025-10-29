@@ -1,4 +1,6 @@
 ﻿using DutchTreat.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace Dutch_Treat.Data
@@ -7,17 +9,28 @@ namespace Dutch_Treat.Data
     {
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _hosting;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
 
-        public DutchSeeder(ApplicationDbContext context, IWebHostEnvironment hosting)
+        public DutchSeeder(ApplicationDbContext context, 
+            IWebHostEnvironment hosting, 
+            RoleManager<IdentityRole<int>> roleManager)
         {
             _db = context;
             _hosting = hosting;     //will be used to find the full path of the project 
+            _roleManager = roleManager;
         }
 
-        public void Seed()
+        public async Task Seed()
         {
             //Verify that the database exists. Hover over the method and read the documentation. 
             _db.Database.EnsureCreated();
+
+            if (!_roleManager.Roles.Any()) 
+            {
+                await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole<int>("Supervisor"));
+                await _roleManager.CreateAsync(new IdentityRole<int>("Default"));
+            }
 
             //If there are no products then create the sample data from art.json
             if (!_db.Products.Any())
